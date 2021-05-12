@@ -3,14 +3,11 @@ FROM node:14.4.0-buster-slim as build
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
 
-ARG REACT_APP_SERVICE_HOST=http://localhost:8080
-ENV REACT_APP_SERVICE_HOST $REACT_APP_SERVICE_HOST
-
 WORKDIR /code
 
-COPY package.json package-lock.json ./
+COPY package.json ./
 
-RUN npm ci
+RUN npm install
 
 COPY . /code
 RUN npm run build
@@ -26,8 +23,12 @@ RUN useradd -u 5000 app \
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./default.conf /etc/nginx/conf.d/
 
+WORKDIR /usr/share/nginx/html
+COPY ./env.sh .env ./
+RUN chmod +x env.sh
+
 USER app:app
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]

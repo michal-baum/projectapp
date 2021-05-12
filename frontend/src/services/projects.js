@@ -1,13 +1,10 @@
-import config from '../config'
-
-
 async function getAll() {
-    const response = await fetch( `${config.serviceHost}/services/projects` )
-    const json = await response.json()
-    return json.payload
-    
+  const response = await fetch( `${window._env_.API_URL}/services/projects` )
+  const json = await response.json()
+  return json.payload
+  
 }
 
 export default {
-  getAll
+getAll
 }
