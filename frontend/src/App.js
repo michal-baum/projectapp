@@ -29,6 +29,26 @@ class App extends React.Component {
       project: null
     })
 
+    await this.getDataFromApi()
+
+  }
+
+  getData = () => {
+
+    this.setState({
+      isLoading: true,
+      hasErrors: false,
+      error: null,
+      projects: null,
+      project: null
+    })
+
+    this.getDataFromApi();
+
+  }
+
+  getDataFromApi = async () => {
+
     try {
       const projects = await projectService.getAll()
 
@@ -39,7 +59,7 @@ class App extends React.Component {
         projects: projects,
         project: null
       })
-    } catch( reason ) {
+    } catch (reason) {
       this.setState({
         isLoading: false,
         hasErrors: true,
@@ -48,7 +68,6 @@ class App extends React.Component {
         project: null
       })
     }
-
   }
 
   handleSelect = (project) => {
@@ -56,22 +75,25 @@ class App extends React.Component {
       project: project
     })
   }
-  
+
   render() {
     return (
       <div className="App">
         <h1>Project Management</h1>
         <div className="project-list">
-          { this.state.isLoading
+          {this.state.isLoading
             ? <span>Loading...</span>
             : this.state.hasErrors
               ? (<div><p>{this.state.error.message}</p><p>Make sure the services and running and try again.</p></div>)
-              : <ProjectsTable projects={this.state.projects} onSelect={ this.handleSelect }/>
+              : <ProjectsTable projects={this.state.projects} onSelect={this.handleSelect} />
           }
 
         </div>
+        <div className="refresh-button">
+           <button className="btn btn-primary" onClick={this.getData}>Refresh Data</button>
+        </div>
         <div className="project-details">
-          { !this.state.project 
+          {!this.state.project
             ? (
               <span></span>
             ) : (
@@ -113,7 +135,7 @@ class App extends React.Component {
       </div>
     );
   }
-  
+
 }
 
 export default App;
