@@ -11,12 +11,12 @@ spec:
     metadata:
       labels:
         name: projectapp-backend
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
       - name: backend
         # image: k8smaestro/projectapp-backend:2.0
@@ -107,12 +107,12 @@ spec:
     metadata:
       labels:
         name: projectapp-frontend
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 5000
-      runAsGroup: 5000
-      fsGroup: 5000
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 5000
+        runAsGroup: 5000
+        fsGroup: 5000
       containers:
       - name: frontend
         # image: k8smaestro/projectapp-frontend:2.0
