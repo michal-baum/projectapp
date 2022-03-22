@@ -1,4 +1,4 @@
-FROM node:16.13.1-buster-slim
+FROM node:17.7.2-buster-slim
 
 ARG NODE_ENV=production
 ENV NODE_ENV $NODE_ENV
